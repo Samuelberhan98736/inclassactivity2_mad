@@ -47,7 +47,7 @@ class _RunMyAppState extends State<RunMyApp> {
   }
 }
 
-// ---------------- HomeScreen ----------------
+//homescreen
 class HomeScreen extends StatelessWidget {
   final Function(ThemeMode) changeTheme;
   final ThemeMode themeMode;
@@ -109,7 +109,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// ---------------- SettingsScreen ----------------
+//setings
 class SettingsScreen extends StatelessWidget {
   final Function(ThemeMode) changeTheme;
   final ThemeMode themeMode;
