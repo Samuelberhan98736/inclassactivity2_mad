@@ -12,8 +12,8 @@ class RunMyApp extends StatefulWidget {
 }
 
 class _RunMyAppState extends State<RunMyApp> {
-  ThemeMode _themeMode = ThemeMode.system;
-  // use this method method to change the theme
+  ThemeMode _themeMode = ThemeMode.light;
+
   void changeTheme(ThemeMode themeMode) {
     setState(() {
       _themeMode = themeMode;
@@ -23,39 +23,84 @@ class _RunMyAppState extends State<RunMyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blueGrey),
-
-      // standard dark theme
-      darkTheme: ThemeData.dark(),
-      themeMode: _themeMode,
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Theme Demo '),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.blueGrey,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 18, color: Colors.black),
         ),
-        body: Center(
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.blueGrey,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 18, color: Colors.white),
+        ),
+      ),
+      themeMode: _themeMode,
+      home: HomeScreen(
+        changeTheme: changeTheme,
+        themeMode: _themeMode,
+      ),
+    );
+  }
+}
+
+// ---------------- HomeScreen ----------------
+class HomeScreen extends StatelessWidget {
+  final Function(ThemeMode) changeTheme;
+  final ThemeMode themeMode;
+
+  const HomeScreen({
+    super.key,
+    required this.changeTheme,
+    required this.themeMode,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Theme Demo")),
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Choose the Theme:',
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () => changeTheme(ThemeMode.light) ,
-                  child: Text('Light Theme'),
+              Container(
+                margin: const EdgeInsets.all(20),
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                  color: themeMode == ThemeMode.light
+                      ? Colors.grey[300]
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(60),
                 ),
-                ElevatedButton(
-                  onPressed: () => changeTheme(ThemeMode.dark),
-                  child:Text('Dark Theme'),
-                ),
-              ],
-
-              
-
-                  // Create two buttons here and change the theme when the button is pressed. use children[] and create two button inside it.
+                child: const Center(
+                  child: Text(
+                    "Mobile App\nDevelopment Testing",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18),
                   ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SettingsScreen(
+                        changeTheme: changeTheme,
+                        themeMode: themeMode,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text("Go to Settings"),
+              ),
             ],
           ),
         ),
@@ -63,4 +108,33 @@ class _RunMyAppState extends State<RunMyApp> {
     );
   }
 }
+
+// ---------------- SettingsScreen ----------------
+class SettingsScreen extends StatelessWidget {
+  final Function(ThemeMode) changeTheme;
+  final ThemeMode themeMode;
+
+  const SettingsScreen({
+    super.key,
+    required this.changeTheme,
+    required this.themeMode,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Settings")),
+      body: Center(
+        child: SwitchListTile(
+          title: const Text("Dark Mode"),
+          value: themeMode == ThemeMode.dark,
+          onChanged: (value) {
+            changeTheme(value ? ThemeMode.dark : ThemeMode.light);
+          },
+        ),
+      ),
+    );
+  }
+}
+
 
