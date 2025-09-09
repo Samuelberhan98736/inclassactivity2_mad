@@ -40,7 +40,20 @@ class _RunMyAppState extends State<RunMyApp> {
               const Text(
                 'Choose the Theme:',
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () => changeTheme(ThemeMode.light) ,
+                  child: Text('Light Theme'),
+                ),
+                ElevatedButton(
+                  onPressed: () => changeTheme(ThemeMode.dark),
+                  child:Text('Dark Theme'),
+                ),
+              ],
+
+              
+
                   // Create two buttons here and change the theme when the button is pressed. use children[] and create two button inside it.
                   ),
             ],
