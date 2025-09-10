@@ -138,3 +138,6 @@ class SettingsScreen extends StatelessWidget {
 }
 
 
+//added a setting feature and also a buttton that changes froom light to dark. 
+
+//changed the circle to green so the text doesnot completly disappear
