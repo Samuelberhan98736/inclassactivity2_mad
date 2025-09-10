@@ -75,8 +75,8 @@ class HomeScreen extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                   color: themeMode == ThemeMode.light
-                      ? Colors.grey[300]
-                      : Colors.white,
+                      ? const Color.fromARGB(255, 58, 163, 20)
+                      : const Color.fromARGB(255, 4, 41, 162),
                   borderRadius: BorderRadius.circular(60),
                 ),
                 child: const Center(
